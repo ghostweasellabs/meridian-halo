@@ -1,0 +1,31 @@
+{
+  "name": "meridian-halo",
+  "version": "1.0.0",
+  "type": "module",
+  "main": "dist/meridian-halo.cjs",
+  "module": "dist/meridian-halo.mjs",
+  "types": "dist/index.d.ts",
+  "exports": {
+    ".": {
+      "import": "./dist/meridian-halo.mjs",
+      "require": "./dist/meridian-halo.cjs",
+      "default": "./dist/meridian-halo.mjs"
+    }
+  },
+  "scripts": {
+    "build": "node ./scripts/build.mjs",
+    "dev": "node ./scripts/build.mjs --watch",
+    "prepublishOnly": "npm run build",
+    "release": "npm run build && node ./scripts/release.mjs",
+    "demo:serve": "npx --yes http-server -c-1 ."
+  },
+  "files": [
+    "dist"
+  ],
+  "dependencies": {
+    "three": "^0.160.0"
+  },
+  "devDependencies": {
+    "esbuild": "^0.20.2"
+  }
+} 

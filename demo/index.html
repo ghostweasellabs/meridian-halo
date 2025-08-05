@@ -1,0 +1,60 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <title>Meridian Halo Demo (external three)</title>
+    <style>
+      html, body { height: 100%; margin: 0; background: radial-gradient(1200px 800px at 50% 20%, #0f1623 0%, #0b0f14 60%); color: #e6f0ff; font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, Cantarell; }
+      .wrap { display: grid; place-items: center; min-height: 100svh; padding: 24px; box-sizing: border-box; }
+      .card { width: min(90vw, 760px); background: rgba(22,30,44,0.7); border: 1px solid rgba(78,103,152,0.25); border-radius: 16px; box-shadow: 0 10px 30px rgba(0,0,0,0.5); backdrop-filter: blur(6px); }
+      header { display: flex; align-items: center; justify-content: space-between; padding: 12px 16px; border-bottom: 1px solid rgba(78,103,152,0.25); }
+      header h1 { font-size: 16px; margin: 0; color: #dbe8ff; letter-spacing: 0.4px; }
+      .status { font-size: 12px; color: #9bb6e3; background: rgba(62,85,128,0.3); padding: 4px 8px; border-radius: 999px; border: 1px solid rgba(78,103,152,0.35); }
+      .stage { padding: 16px; display: grid; place-items: center; }
+      #app { width: 640px; height: 640px; border-radius: 12px; overflow: hidden; background: #0c121a; }
+      .controls { display: flex; gap: 10px; padding: 12px 16px; border-top: 1px solid rgba(78,103,152,0.25); justify-content: flex-end; }
+      button { background: #182233; color: #cfe3ff; padding: 8px 12px; border: 1px solid #2b3b55; border-radius: 8px; cursor: pointer; font-weight: 600; }
+      button:hover { background: #21304a; }
+      button.secondary { background: transparent; }
+    </style>
+  </head>
+  <body>
+    <div class="wrap">
+      <div class="card">
+        <header>
+          <h1>Meridian Halo</h1>
+          <div class="status" id="style-status">Style: Off</div>
+        </header>
+        <div class="stage">
+          <div id="app"></div>
+        </div>
+        <div class="controls">
+          <button class="secondary" id="toggle-style">Enable Style Cycle</button>
+          <button id="destroy">Destroy</button>
+        </div>
+      </div>
+    </div>
+
+    <script src="https://unpkg.com/three@0.160.0/build/three.min.js"></script>
+    <script src="/dist/meridian-halo.min.js"></script>
+    <script>
+      const mount = document.getElementById('app');
+      const icon = MeridianHalo.createHalo({ mount, width: 640, height: 640 });
+      // start with style off to make the toggle obvious
+      icon.setStyleCycle(false);
+
+      const btn = document.getElementById('toggle-style');
+      const status = document.getElementById('style-status');
+      let on = false;
+      function refresh(){
+        status.textContent = `Style: ${on ? 'On' : 'Off'}`;
+        btn.textContent = on ? 'Disable Style Cycle' : 'Enable Style Cycle';
+      }
+      refresh();
+
+      btn.onclick = () => { on = !on; icon.setStyleCycle(on); refresh(); };
+      document.getElementById('destroy').onclick = () => icon.destroy();
+    </script>
+  </body>
+</html> 
